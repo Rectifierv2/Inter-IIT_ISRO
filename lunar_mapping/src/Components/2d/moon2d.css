@@ -1,0 +1,65 @@
+/* The container div for the 2D and 3D interactive moon */
+.two-moon-container, .three-moon-container {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    background-color: #000;  /* Space-black background */
+  }
+  .moon-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;  /* Ensure it covers the full background area */
+    opacity: 0.5;  /* Optional: Adjust opacity for the background */
+  }
+  
+  /* UI elements (buttons, dropdowns) */
+  .ui-elements {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 1;
+    color: #FFFAF0;  /* Light, celestial color */
+    font-family: 'Space Mono', monospace;  /* Celestial, space-themed font */
+    font-size: 18px;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
+  }
+  
+  /* Style for the button */
+  .ui-elements button {
+    background-color: #282828;  /* Dark background */
+    color: #FFD700;  /* Gold text */
+    padding: 12px 25px;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 15px;
+    font-family: 'Space Mono', monospace;
+    font-size: 16px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+  }
+  
+  .ui-elements button:hover {
+    background-color: #FFD700;
+    color: #282828;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.9);
+  }
+  
+  /* Style for the dropdown */
+  .ui-elements select {
+    background-color: #333;
+    color: #FFD700;
+    padding: 12px 25px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Space Mono', monospace;
+    font-size: 16px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+  }
+  
+  .ui-elements select:hover {
+    background-color: #FFD700;
+    color: #282828;
+  }
+  
