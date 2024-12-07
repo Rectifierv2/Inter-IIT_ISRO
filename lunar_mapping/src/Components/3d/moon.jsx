@@ -6,6 +6,8 @@ import './moon.css';  // Import the CSS file for styling
 const ThreeDMoon = () => {
   const mountRef = useRef(null);
   const [texture, setTexture] = useState("/assets/lunar_texture8k.jpg");  // Default texture
+  const [coords, setCoords] = useState({ lat: 0, lon: 0 });  // Latitude and Longitude
+  const [raycastActive, setRaycastActive] = useState(false);  // To control whether raycast is active
   const navigate = useNavigate();  // React Router hook for navigation
 
   useEffect(() => {
@@ -13,7 +15,7 @@ const ThreeDMoon = () => {
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setClearColor(0x000000, 1);  // Set the background color to black (or transparent if needed)
+    renderer.setClearColor(0x000000, 1);  // Set the background color to black
     mountRef.current.appendChild(renderer.domElement);
 
     // Load lunar texture for the moon
@@ -29,8 +31,8 @@ const ThreeDMoon = () => {
       }
     );
 
-    // Create Moon geometry and material with increased size and quality
-    const geometry = new THREE.SphereGeometry(5, 128, 128);  // Increased size and quality
+    // Create Moon geometry and material
+    const geometry = new THREE.SphereGeometry(5, 128, 128);  // Increased quality
     const material = new THREE.MeshStandardMaterial({ map: lunarTexture });
     const moon = new THREE.Mesh(geometry, material);
     scene.add(moon);
@@ -61,8 +63,41 @@ const ThreeDMoon = () => {
 
     window.addEventListener("resize", handleResize);
 
+    // Raycasting logic to detect mouse position on the globe
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+
+    const onMouseMove = (event) => {
+      // Normalize mouse coordinates (-1 to 1)
+      mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+      // Cast a ray to the moon
+      raycaster.setFromCamera(mouse, camera);
+      const intersects = raycaster.intersectObject(moon);
+
+      if (intersects.length > 0) {
+        const intersectPoint = intersects[0].point;
+
+        // Calculate latitude and longitude from intersected point
+        const lat = (Math.asin(intersectPoint.y / 5) * 180) / Math.PI;  // Convert Y to Latitude
+        const lon = (Math.atan2(intersectPoint.x, intersectPoint.z) * 180) / Math.PI;  // Convert X and Z to Longitude
+
+        setCoords({
+          lat: lat.toFixed(2),
+          lon: lon.toFixed(2)
+        });
+
+        setRaycastActive(true);  // Show coordinates when hovering over the moon
+      } else {
+        setRaycastActive(false);  // Hide coordinates if not over the moon
+      }
+    };
+
+    window.addEventListener("mousemove", onMouseMove);
+
     return () => {
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("mousemove", onMouseMove);
     };
   }, [texture]);  // Re-run useEffect when texture changes
 
@@ -104,6 +139,12 @@ const ThreeDMoon = () => {
   return (
     <div className="three-moon-container">
       <div ref={mountRef} className="moon-content" />
+      {raycastActive && (
+        <div className="coordinates">
+          <p style={{ color: 'white', fontSize: '20px' }}>Latitude: {coords.lat}</p>
+          <p style={{ color: 'white', fontSize: '20px' }}>Longitude: {coords.lon}</p>
+        </div>
+      )}
       <div className="ui-elements">
         <button onClick={handleBackClick}>Lunar 2D</button>
         <select onChange={handleDropdownChange}>
