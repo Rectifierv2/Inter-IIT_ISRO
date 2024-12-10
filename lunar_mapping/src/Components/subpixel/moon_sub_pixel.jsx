@@ -147,8 +147,8 @@ const SUBPIXEL = () => {
           <option value="S">S</option>
           <option value="Si">Si</option>
         </select>
-        <button onClick={handleZoomIn}>Zoom In</button>
-        <button onClick={handleZoomOut}>Zoom Out</button> {/* Zoom Out Button */}
+        <button onClick={handleZoomIn}>Zoom-In</button>
+        <button onClick={handleZoomOut}>Zoom-Out</button> {/* Zoom Out Button */}
         <div className="coordinates">
           <p>Latitude: {coords.lat}</p>
           <p>Longitude: {coords.lon}</p>
