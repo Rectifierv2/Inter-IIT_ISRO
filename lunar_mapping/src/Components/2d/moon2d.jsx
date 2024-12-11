@@ -20,14 +20,26 @@ const TwoDMoon = () => {
   const handleDropdownChange = (event) => {
     const selectedCompound = event.target.value;
     switch (selectedCompound) {
-      case "Al/Mg":
-        setTexture("/assets/Lunar_Surface_Map_with_Mg_Al_Intensity_Polygon_Overlay_E000N0000.png");
+      case "FeO":
+        setTexture("/assets/feO_texture.jpg");
         break;
-      case "Mg/Si":
-        setTexture("/assets/Lunar_Surface_Map_with_Mg_Si_Intensity_Polygon_Overlay_E000N0000.png");
+      case "CaO":
+        setTexture("/assets/caO_texture.jpg");
         break;
-      case "Al/Si":
-        setTexture("/assets/Lunar_Surface_Map_with_Al_Si_Intensity_Polygon_Overlay_E000N0000.png");
+      case "MgO":
+        setTexture("/assets/mgO_texture.jpg");
+        break;
+      case "SiO2":
+        setTexture("/assets/siO2_texture.jpg");
+        break;
+      case "Al2O3":
+        setTexture("/assets/al2O3_texture.jpg");
+        break;
+      case "TiO2":
+        setTexture("/assets/tiO2_texture.jpg");
+        break;
+      case "Na2O":
+        setTexture("/assets/na2O_texture.jpg");
         break;
       default:
         setTexture("/assets/lunar_texture8k.jpg");
@@ -118,9 +130,13 @@ const TwoDMoon = () => {
       <div className="ui-elements">
         <button onClick={handleBackClick}>Back to 3D</button>
         <select onChange={handleDropdownChange}>
-          <option value="Al/Mg">Al/Mg</option>
-          <option value="Mg/Si">Mg/Si</option>
-          <option value="Al/Si">Al/Si</option>
+          <option value="FeO">FeO</option>
+          <option value="CaO">CaO</option>
+          <option value="MgO">MgO</option>
+          <option value="SiO2">SiO2</option>
+          <option value="Al2O3">Al2O3</option>
+          <option value="TiO2">TiO2</option>
+          <option value="Na2O">Na2O</option>
         </select>
         <button onClick={handleZoomIn}>Zoom In</button>
         <div className="coordinates">
